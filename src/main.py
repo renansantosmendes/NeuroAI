@@ -1,57 +1,26 @@
+import uvicorn
 import os
-from langchain_core.documents import Document
-from src.config import Config
-from src.vector_store import PineconeManager
-from src.chain import RAGChain
-from src.graph import RAGGraph, AdvancedRAGGraph
+from .api.app import app
+from .config import Config
 
-def get_sample_documents():
-    sample_texts = [
-        "Machine Learning is a subset of artificial intelligence.",
-        "RAG combines retrieval systems with generative AI.",
-        "Pinecone is a vector database for ML applications.",
-        "LangGraph is for building stateful applications with LLMs."
-    ]
-    return [Document(page_content=text) for text in sample_texts]
-
-def run_rag_demo():
-    # Validate configuration
-    Config.validate()
+def start():
+    """
+    Start the FastAPI server.
+    """
+    # Validate config on startup
+    try:
+        Config.validate()
+        print("Configuration validated successfully.")
+    except ValueError as e:
+        print(f"Configuration error: {e}")
+        print("Please ensure your .env file is correctly configured.")
+        # We don't exit here to allow the app to potentially use defaults or show errors via API
     
-    # Initialize components
-    pm = PineconeManager(
-        pinecone_api_key=Config.PINECONE_API_KEY,
-        openai_api_key=Config.OPENAI_API_KEY,
-        index_name=Config.INDEX_NAME
-    )
+    port = int(os.getenv("PORT", 8000))
+    host = os.getenv("HOST", "0.0.0.0")
     
-    # Setup knowledge base
-    docs = get_sample_documents()
-    pm.create_from_documents(docs)
-    
-    # Initialize Chain and Graphs
-    rag_chain = RAGChain(pm)
-    rag_graph = RAGGraph(rag_chain)
-    advanced_rag = AdvancedRAGGraph(rag_chain)
-    
-    # Test queries
-    print("\n--- Basic RAG Query ---")
-    result = rag_chain.query("What is RAG?")
-    print(f"Answer: {result['answer']}")
-    
-    print("\n--- LangGraph RAG Query ---")
-    result = rag_graph.query("What is Machine Learning?")
-    print(f"Answer: {result['answer']}")
-    
-    print("\n--- Advanced RAG Query (Document search) ---")
-    result = advanced_rag.query("What is Pinecone?")
-    print(f"Answer: {result['answer']}")
-    print(f"Confidence: {result['confidence']}")
-    
-    print("\n--- Advanced RAG Query (General question) ---")
-    result = advanced_rag.query("Hi, how are you?")
-    print(f"Answer: {result['answer']}")
-    print(f"Needs retrieval: {result['needs_retrieval']}")
+    print(f"Starting NeuroAI RAG API on http://{host}:{port}")
+    uvicorn.run(app, host=host, port=port)
 
 if __name__ == "__main__":
-    run_rag_demo()
+    start()

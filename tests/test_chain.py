@@ -1,6 +1,6 @@
 import os
 from unittest.mock import MagicMock, patch
-from src.chain import RAGChain
+from src.core.chain import RAGChain
 from langchain_core.documents import Document
 
 os.environ["OPENAI_API_KEY"] = "fake-key"
@@ -15,7 +15,7 @@ def test_rag_chain_format_context():
     assert "doc2" in formatted
     assert "---" in formatted
 
-@patch("src.chain.ChatOpenAI")
+@patch("src.core.chain.ChatOpenAI")
 def test_rag_chain_query(mock_llm_class):
     pm = MagicMock()
     pm.similarity_search.return_value = [Document(page_content="context")]
@@ -29,7 +29,7 @@ def test_rag_chain_query(mock_llm_class):
         assert result["question"] == "test question"
         assert len(result["context"]) == 1
 
-@patch("src.chain.ChatOpenAI")
+@patch("src.core.chain.ChatOpenAI")
 def test_rag_chain_generate(mock_llm_class):
     pm = MagicMock()
     chain = RAGChain(pm)

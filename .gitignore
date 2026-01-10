@@ -50,7 +50,13 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
-*.txt
+# Test and coverage artifacts
+*_report.txt
+chain_fail.txt
+chain_out.txt
+cov_short.txt
+full_cov.txt
+test_report.txt
 
 # Translations
 *.mo

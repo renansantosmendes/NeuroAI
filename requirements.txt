@@ -18,5 +18,10 @@ pinecone>=5.0.0
 # Web loading (optional, for loading web documents)
 beautifulsoup4>=4.12.0
 
+# API
+fastapi>=0.115.0
+uvicorn>=0.30.0
+pydantic>=2.7.0
+
 # Utilities
 python-dotenv>=1.0.0

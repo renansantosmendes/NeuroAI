@@ -1,13 +1,13 @@
 import pytest
 from unittest.mock import patch, MagicMock
-from src.vector_store import PineconeManager
+from src.core.vector_store import PineconeManager
 from langchain_core.documents import Document
 
 @pytest.fixture
 def mock_pinecone_manager():
-    with patch("src.vector_store.Pinecone") as mock_pc, \
-         patch("src.vector_store.OpenAIEmbeddings") as mock_emb, \
-         patch("src.vector_store.ServerlessSpec"):
+    with patch("src.core.vector_store.Pinecone") as mock_pc, \
+         patch("src.core.vector_store.OpenAIEmbeddings") as mock_emb, \
+         patch("src.core.vector_store.ServerlessSpec"):
         pm = PineconeManager("p-key", "o-key", "t-index")
         yield pm, mock_pc, mock_emb
 
@@ -29,7 +29,7 @@ def test_create_from_documents(mock_pinecone_manager):
     mock_instance = mock_pc.return_value
     mock_instance.list_indexes.return_value = [MagicMock(name="t-index")]
     
-    with patch("src.vector_store.PineconeVectorStore") as mock_vs:
+    with patch("src.core.vector_store.PineconeVectorStore") as mock_vs:
         docs = [Document(page_content="test")]
         pm.create_from_documents(docs)
         mock_vs.return_value.add_documents.assert_called_once()

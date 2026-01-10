@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock, patch
-from src.graph import RAGGraph, AdvancedRAGGraph
-from src.state import RAGState, AdvancedRAGState
+from src.core.graph import RAGGraph, AdvancedRAGGraph
+from src.core.state import RAGState, AdvancedRAGState
 
 def test_rag_graph_nodes():
     chain = MagicMock()
@@ -22,11 +22,11 @@ def test_advanced_rag_graph_nodes():
     chain.retrieve.return_value = ["doc"]
     chain.generate.return_value = "ans"
     
-    with patch("src.graph.ChatOpenAI") as mock_llm:
+    with patch("src.core.graph.ChatOpenAI") as mock_llm:
         # Mocking classification
         mock_instance = mock_llm.return_value
         # Mocking the classification chain invoke
-        with patch("src.graph.StrOutputParser.invoke", return_value="YES"):
+        with patch("src.core.graph.StrOutputParser.invoke", return_value="YES"):
             arg = AdvancedRAGGraph(chain)
             
             state: AdvancedRAGState = {"question": "q", "context": [], "answer": "", "needs_retrieval": False, "confidence": 0.0}

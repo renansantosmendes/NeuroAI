@@ -1,5 +1,7 @@
 # NeuroAI RAG Agent API
 
+![Python CI](https://github.com/<your-username>/<your-repo-name>/actions/workflows/ci.yml/badge.svg)
+
 This project implements a robust Retrieval-Augmented Generation (RAG) system using LangChain, LangGraph, and Pinecone, served through a FastAPI application.
 
 ## Project Structure

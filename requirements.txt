@@ -1,0 +1,22 @@
+# RAG Example with LangChain, LangGraph and Pinecone
+# Requirements file
+
+# Core LangChain packages
+langchain>=0.3.0
+langchain-community>=0.3.0
+langchain-openai>=0.2.0
+langchain-core>=0.3.0
+langchain-pinecone>=0.2.0
+langchain-text-splitters>=0.3.0
+
+# LangGraph for stateful workflows
+langgraph>=0.2.0
+
+# Pinecone vector database
+pinecone>=5.0.0
+
+# Web loading (optional, for loading web documents)
+beautifulsoup4>=4.12.0
+
+# Utilities
+python-dotenv>=1.0.0

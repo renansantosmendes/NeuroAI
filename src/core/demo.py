@@ -1,8 +1,8 @@
 from langchain_core.documents import Document
-from ..config import Config
-from .vector_store import PineconeManager
-from .chain import RAGChain
-from .graph import RAGGraph, AdvancedRAGGraph
+from src.config import Config
+from src.core.vector_store import PineconeManager
+from src.core.chain import RAGChain
+from src.core.graph import RAGGraph, AdvancedRAGGraph
 
 def get_sample_documents():
     sample_texts = [

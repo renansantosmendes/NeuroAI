@@ -1,7 +1,7 @@
 import uvicorn
 import os
-from .api.app import app
-from .config import Config
+from src.api.app import app
+from src.config import Config
 
 def start():
     """

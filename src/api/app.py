@@ -1,10 +1,10 @@
 from fastapi import FastAPI, HTTPException, Depends
 from typing import List
-from ..config import Config
-from ..core.vector_store import PineconeManager
-from ..core.chain import RAGChain
-from ..core.graph import RAGGraph, AdvancedRAGGraph
-from .schemas import QueryRequest, QueryResponse, AdvancedQueryResponse, HealthResponse, DocumentSchema
+from src.config import Config
+from src.core.vector_store import PineconeManager
+from src.core.chain import RAGChain
+from src.core.graph import RAGGraph, AdvancedRAGGraph
+from src.api.schemas import QueryRequest, QueryResponse, AdvancedQueryResponse, HealthResponse, DocumentSchema
 
 # Initialize FastAPI app
 app = FastAPI(

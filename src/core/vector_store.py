@@ -13,7 +13,7 @@ class PineconeManager:
     Manages the creation and querying of the Pinecone vector store.
     """
     
-    def __init__(self, pinecone_api_key: str, openai_api_key: str, index_name: str = "rag-index"):
+    def __init__(self, pinecone_api_key: str, openai_api_key: str, index_name: str = "rag-langchain-example"):
         self.pinecone_api_key = pinecone_api_key
         self.openai_api_key = openai_api_key
         self.index_name = index_name

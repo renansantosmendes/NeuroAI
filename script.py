@@ -117,7 +117,7 @@ class PineconeManager:
         vector_store: The PineconeVectorStore instance.
     """
     
-    def __init__(self, pinecone_api_key: str = None, openai_api_key: str = None, index_name: str = "rag-index"):
+    def __init__(self, pinecone_api_key: str = None, openai_api_key: str = None, index_name: str = "rag-langchain-example"):
         """
         Initialize the PineconeManager.
         

@@ -1,9 +1,12 @@
+import logging
 from typing import List, Dict, Any
 from langchain_openai import ChatOpenAI
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from .vector_store import PineconeManager
+
+logger = logging.getLogger(__name__)
 
 class RAGChain:
     """
@@ -39,6 +42,7 @@ Answer:"""
         """
         Retrieve relevant documents for a question.
         """
+        logger.info(f"RAGChain: Retrieving context from index: {self.pinecone_manager.index_name}")
         return self.pinecone_manager.similarity_search(question, k=k)
     
     def _get_chain(self):

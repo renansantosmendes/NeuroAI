@@ -1,5 +1,6 @@
 import os
 import time
+import logging
 from typing import List, Tuple, Optional
 from uuid import uuid4
 
@@ -7,6 +8,8 @@ from pinecone import Pinecone, ServerlessSpec
 from langchain_pinecone import PineconeVectorStore
 from langchain_openai import OpenAIEmbeddings
 from langchain_core.documents import Document
+
+logger = logging.getLogger(__name__)
 
 class PineconeManager:
     """
@@ -18,6 +21,7 @@ class PineconeManager:
         self.openai_api_key = openai_api_key
         self.index_name = index_name
         
+        logger.info(f"Initializing PineconeManager with index: {self.index_name}")
         self.embeddings = OpenAIEmbeddings(api_key=self.openai_api_key)
         self.pc = Pinecone(api_key=self.pinecone_api_key)
         self.vector_store = None
@@ -65,6 +69,7 @@ class PineconeManager:
         """
         Connect to an existing Pinecone index.
         """
+        logger.info(f"Connecting to existing Pinecone index: {self.index_name}, namespace: {namespace}")
         self.vector_store = PineconeVectorStore(
             index=self.pc.Index(self.index_name),
             embedding=self.embeddings,
@@ -77,6 +82,7 @@ class PineconeManager:
         """
         Perform similarity search on the vector store.
         """
+        logger.info(f"Performing similarity search on index: {self.index_name}, namespace: {namespace}")
         if self.vector_store is None:
             raise ValueError("Vector store not initialized.")
         

@@ -1,3 +1,4 @@
+import logging
 from fastapi import FastAPI, HTTPException, Depends
 from typing import List
 from src.config import Config
@@ -5,6 +6,8 @@ from src.core.vector_store import PineconeManager
 from src.core.chain import RAGChain
 from src.core.graph import RAGGraph, AdvancedRAGGraph
 from src.api.schemas import QueryRequest, QueryResponse, AdvancedQueryResponse, HealthResponse, DocumentSchema
+
+logger = logging.getLogger(__name__)
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -48,6 +51,7 @@ async def query_basic(request: QueryRequest):
     Execute a basic RAG query.
     Retrieves context and generates an answer using the standard chain.
     """
+    logger.info(f"API: Received basic query. Question: {request.question}")
     try:
         chain, _, _ = get_rag()
         result = chain.query(request.question, k=request.k)
@@ -70,6 +74,7 @@ async def query_graph(request: QueryRequest):
     """
     Execute a RAG query using the LangGraph stateful workflow.
     """
+    logger.info(f"API: Received graph query. Question: {request.question}")
     try:
         _, graph, _ = get_rag()
         result = graph.query(request.question)
@@ -92,6 +97,7 @@ async def query_advanced(request: QueryRequest):
     Execute an advanced RAG query with routing.
     Determines if retrieval is needed based on the query type.
     """
+    logger.info(f"API: Received advanced query. Question: {request.question}")
     try:
         _, _, adv_graph = get_rag()
         result = adv_graph.query(request.question)

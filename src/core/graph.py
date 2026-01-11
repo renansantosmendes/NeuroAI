@@ -1,3 +1,4 @@
+import logging
 from langgraph.graph import StateGraph, END
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
@@ -5,6 +6,8 @@ from langchain_core.output_parsers import StrOutputParser
 
 from .state import RAGState, AdvancedRAGState
 from .chain import RAGChain
+
+logger = logging.getLogger(__name__)
 
 class RAGGraph:
     """
@@ -17,6 +20,7 @@ class RAGGraph:
     
     def _retrieve_node(self, state: RAGState):
         question = state["question"]
+        logger.info(f"RAGGraph: Node 'retrieve' using index: {self.rag_chain.pinecone_manager.index_name}")
         context = self.rag_chain.retrieve(question)
         return {"context": context}
     
@@ -69,6 +73,7 @@ Respond with only 'YES' if the question needs document retrieval, or 'NO' if it'
     
     def _retrieve_node(self, state: AdvancedRAGState):
         question = state["question"]
+        logger.info(f"AdvancedRAGGraph: Node 'retrieve' using index: {self.rag_chain.pinecone_manager.index_name}")
         context = self.rag_chain.retrieve(question)
         return {"context": context}
     

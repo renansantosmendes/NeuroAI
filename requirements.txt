@@ -24,7 +24,7 @@ uvicorn>=0.30.0
 pydantic>=2.7.0
 
 # UI
-chainlit>=1.1.0
+# chainlit>=1.1.0
 
 # Utilities
 python-dotenv>=1.0.0

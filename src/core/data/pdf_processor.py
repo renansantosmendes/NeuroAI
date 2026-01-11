@@ -332,7 +332,7 @@ class PineconeIndexer:
             raise ValueError("OPENAI_API_KEY not set")
         
         self.pc = Pinecone(api_key=self.pinecone_api_key)
-        self.embeddings = OpenAIEmbeddings()
+        self.embeddings = OpenAIEmbeddings(api_key=self.openai_api_key)
         self.vector_store = None
     
     def create_index(
